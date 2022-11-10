@@ -1,17 +1,18 @@
 set.seed(123)
-a <- 200
+a <- 2000
 squareloss <- 0
-squarelossoptimal <- 0
+squarelossoptimal <- c()
+y <- rgamma(a, 15, 3)
 
 for (i in 1:a ){
-  y <- rgamma(a, 15, 3)
-  squareloss <- (a-y[a])^2
-  sqaurelossoptimal <- (15/3 - y)^2
+  squareloss <- append(squareloss, (i%%7-y[i])^2)
+  squarelossoptimal <- append(squarelossoptimal, (15/3 - y[i])^2)
 }
+squarelossoptimal
 mean(squareloss)
 mean(squarelossoptimal)
 min <- 15/3^2 #the minimum loss occurs at alpha/beta^2 which is also equal to the variance of a beta
-mean(sqaurelossoptimal)- min #The difference between these two should be approximately 0 on average
+mean(squarelossoptimal)- min #The difference between these two should be approximately 0 on average
 
 q=.75 #Hyperparameter that is fixed to take a mixure of the two different distributions
 checkloss <- c()
@@ -58,7 +59,7 @@ lossfloor <- c()
 #This takes the floor of the Poisson parameter and checks to see if it is different than the value a
 y <- rpois(a, taufloor)
 for (i in 1:a) {
-if (y[i] != i%%10){ #Here we do modulus ten to make the code more likely to produce a 0 and match up the loss with the poisson
+if (y[i] != i%%7){ #Here we do modulus seven to make the code more likely to produce a 0 and match up the loss with the poisson
   lossfloor <- append(lossfloor, 1)  
 } else {
   lossfloor <- append(lossfloor, 0)
