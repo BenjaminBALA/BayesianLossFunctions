@@ -8,13 +8,12 @@ for (i in 1:a ){
   squareloss <- append(squareloss, (i%%7-y[i])^2)
   squarelossoptimal <- append(squarelossoptimal, (15/3 - y[i])^2)
 }
-squarelossoptimal
 mean(squareloss)
 mean(squarelossoptimal)
 min <- 15/3^2 #the minimum loss occurs at alpha/beta^2 which is also equal to the variance of a beta
 mean(squarelossoptimal)- min #The difference between these two should be approximately 0 on average
 
-q=.75 #Hyperparameter that is fixed to take a mixure of the two different distributions
+q =.75 #Hyperparameter that is fixed to take a mixure of the two different distributions
 checkloss <- c()
 for (i in 1:a){
 if (y[i] > i) {
